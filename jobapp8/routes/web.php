@@ -30,6 +30,7 @@ Route::middleware(['auth', 'job.seeker'])->group(function () {
     Route::get('/job-seeker/jobs/{job}', [JobSeekerController::class, 'showJob'])->name('job-seeker.job.show');
     Route::post('/job-seeker/jobs/{job}/apply', [JobSeekerController::class, 'apply'])->name('job-seeker.job.apply');
     Route::get('/job-seeker/applications', [JobSeekerController::class, 'applications'])->name('job-seeker.applications');
+    Route::delete('/job-seeker/applications/{application}', [JobSeekerController::class, 'withdrawApplication'])->name('job-seeker.applications.withdraw');
 });
 
 // Employer routes
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'employer'])->group(function () {
     Route::get('/employer/jobs/{job}/applications', [EmployerController::class, 'applications'])->name('employer.jobs.applications');
     Route::put('/employer/applications/{application}', [EmployerController::class, 'updateApplicationStatus'])->name('employer.applications.update');
     Route::get('/employer/jobs', [EmployerController::class, 'index'])->name('employer.jobs');
+    Route::delete('/employer/jobs/{job}', [EmployerController::class, 'destroyJob'])->name('employer.jobs.delete');
 });
 
 // Admin routes

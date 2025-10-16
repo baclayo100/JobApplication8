@@ -89,6 +89,13 @@ class EmployerController extends Controller
         return redirect()->route('employer.dashboard')->with('success', 'Job updated successfully!');
     }
 
+    public function destroyJob(JobPosting $job)
+    {
+        $this->authorize('delete', $job);
+        $job->delete();
+        return redirect()->route('employer.jobs')->with('success', 'Job deleted successfully!');
+    }
+
     public function applications(JobPosting $job): View
     {
         $this->authorize('view', $job);
