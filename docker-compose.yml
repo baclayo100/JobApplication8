@@ -1,0 +1,47 @@
+services:
+  nginx:
+    build:
+      context: ./docker/nginx
+    ports:
+      - "8085:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./jobapp8:/var/www/html # Laravel application directory
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: ./docker/php
+    expose:
+      - "9000"
+    ports:
+      - "8083:9000"
+    volumes:
+      - ./jobapp8:/var/www/html # Laravel application directory
+    depends_on:
+      - mysql
+
+  mysql:
+    build:
+      context: ./docker/mysql
+    platform: linux/x86_64
+    ports:
+      - "3307:3306" # host:container
+    environment:
+      - "LANG=C.UTF-8"
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=jobapp8"
+      - "MYSQL_PASSWORD=root"
+    volumes:
+      - type: volume
+        source: mysql-volume
+        target: /var/lib/mysql
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  mysql-volume:
+    driver: local
