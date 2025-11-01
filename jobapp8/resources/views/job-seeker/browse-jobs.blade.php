@@ -45,9 +45,16 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <h3>{{ $job->title }}</h3>
-                                    <p class="text-muted">{{ $job->company }} • {{ $job->location }}</p>
+                                <div style="flex: 1;">
+                                    <div class="d-flex align-items-start gap-3 mb-2">
+                                        @if($job->company_logo)
+                                            <img src="{{ asset('storage/' . $job->company_logo) }}" alt="{{ $job->company }} Logo" style="max-width: 60px; max-height: 60px; object-fit: contain; border: 1px solid #ddd; border-radius: 4px; padding: 5px;" onerror="this.style.display='none'">
+                                        @endif
+                                        <div>
+                                            <h3>{{ $job->title }}</h3>
+                                            <p class="text-muted">{{ $job->company }} • {{ $job->location }}</p>
+                                        </div>
+                                    </div>
                                     <p>{{ Str::limit($job->description, 200) }}</p>
                                     <div class="d-flex gap-2 mb-3">
                                         <span class="badge badge-info">{{ ucfirst(str_replace('_', ' ', $job->employment_type)) }}</span>
@@ -55,6 +62,7 @@
                                         @if($job->salary_range)
                                             <span class="badge badge-success">{{ $job->salary_range }}</span>
                                         @endif
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="text-right">

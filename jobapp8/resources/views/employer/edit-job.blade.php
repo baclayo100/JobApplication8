@@ -21,7 +21,7 @@
         @if(session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
-        <form method="POST" action="{{ route('employer.jobs.update', $job) }}">
+        <form method="POST" action="{{ route('employer.jobs.update', $job) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -37,6 +37,20 @@
                     <label for="company">Company</label>
                     <input id="company" name="company" type="text" value="{{ old('company', $job->company) }}" class="form-control" required>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="company_logo">Company Logo</label>
+                @if($job->company_logo)
+                    <div class="mb-2">
+                        <img src="{{ asset('storage/' . $job->company_logo) }}" alt="Company Logo" style="max-height: 100px; margin-bottom: 10px;" onerror="this.style.display='none'">
+                        <br>
+                        <small class="text-muted">Current logo</small>
+                    </div>
+                @endif
+                <input type="file" id="company_logo" name="company_logo" class="form-control" accept="image/jpeg,image/png,image/jpg,image/gif,image/svg">
+                <small class="form-text text-muted">Upload a new logo to replace the current one (max 2MB, JPG/PNG/GIF/SVG)</small>
+            </div>
+            <div class="form-row d-flex gap-3">
                 <div class="form-group" style="flex:1;">
                     <label for="location">Location</label>
                     <input id="location" name="location" type="text" value="{{ old('location', $job->location) }}" class="form-control" required>

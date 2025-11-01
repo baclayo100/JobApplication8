@@ -41,7 +41,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('employer.jobs.store') }}">
+                    <form method="POST" action="{{ route('employer.jobs.store') }}" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="form-group">
@@ -66,6 +66,16 @@
                             <input type="text" id="company" name="company" class="form-control @error('company') is-invalid @enderror" 
                                    value="{{ old('company') }}" required>
                             @error('company')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company_logo">Company Logo</label>
+                            <input type="file" id="company_logo" name="company_logo" class="form-control @error('company_logo') is-invalid @enderror" 
+                                   accept="image/jpeg,image/png,image/jpg,image/gif,image/svg">
+                            <small class="form-text text-muted">Upload a company logo (max 2MB, JPG/PNG/GIF/SVG)</small>
+                            @error('company_logo')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

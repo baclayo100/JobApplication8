@@ -28,8 +28,15 @@
     <div class="container">
         <div class="dashboard">
             <div class="dashboard-header">
-                <h1>{{ $job->title }}</h1>
-                <p>{{ $job->company }} • {{ $job->location }}</p>
+                <div class="d-flex align-items-center gap-3">
+                    @if($job->company_logo)
+                        <img src="{{ asset('storage/' . $job->company_logo) }}" alt="{{ $job->company }} Logo" style="max-width: 100px; max-height: 100px; object-fit: contain; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: white;" onerror="this.style.display='none'">
+                    @endif
+                    <div>
+                        <h1>{{ $job->title }}</h1>
+                        <p>{{ $job->company }} • {{ $job->location }}</p>
+                    </div>
+                </div>
             </div>
 
             @if(session('success'))

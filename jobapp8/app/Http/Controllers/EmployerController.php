@@ -6,6 +6,7 @@ use App\Models\JobApplication;
 use App\Models\JobPosting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class EmployerController extends Controller
@@ -39,6 +40,7 @@ class EmployerController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'company' => 'required|string|max:255',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'location' => 'required|string|max:255',
             'salary_range' => 'nullable|string|max:255',
             'employment_type' => 'required|in:full_time,part_time,contract,internship',
@@ -51,6 +53,12 @@ class EmployerController extends Controller
         $validated['employer_id'] = Auth::id();
         $validated['required_skills'] = $request->input('required_skills', []);
         $validated['benefits'] = $request->input('benefits', []);
+
+        // Handle company logo upload
+        if ($request->hasFile('company_logo')) {
+            $logoPath = $request->file('company_logo')->store('company-logos', 'public');
+            $validated['company_logo'] = $logoPath;
+        }
 
         JobPosting::create($validated);
 
@@ -71,6 +79,7 @@ class EmployerController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'company' => 'required|string|max:255',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'location' => 'required|string|max:255',
             'salary_range' => 'nullable|string|max:255',
             'employment_type' => 'required|in:full_time,part_time,contract,internship',
@@ -83,6 +92,16 @@ class EmployerController extends Controller
 
         $validated['required_skills'] = $request->input('required_skills', []);
         $validated['benefits'] = $request->input('benefits', []);
+
+        // Handle company logo upload
+        if ($request->hasFile('company_logo')) {
+            // Delete old logo if exists
+            if ($job->company_logo) {
+                Storage::disk('public')->delete($job->company_logo);
+            }
+            $logoPath = $request->file('company_logo')->store('company-logos', 'public');
+            $validated['company_logo'] = $logoPath;
+        }
 
         $job->update($validated);
 
