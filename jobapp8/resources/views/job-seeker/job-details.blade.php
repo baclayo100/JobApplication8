@@ -29,8 +29,18 @@
         <div class="dashboard">
             <div class="dashboard-header">
                 <div class="d-flex align-items-center gap-3">
-                    @if($job->company_logo)
-                        <img src="{{ asset('storage/' . $job->company_logo) }}" alt="{{ $job->company }} Logo" style="max-width: 100px; max-height: 100px; object-fit: contain; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: white;" onerror="this.style.display='none'">
+                    @if($job->company_logo && !empty($job->company_logo))
+                        @php
+                            $logoPath = asset('storage/' . $job->company_logo);
+                        @endphp
+                        <img src="{{ $logoPath }}" alt="{{ $job->company }} Logo" style="max-width: 100px; max-height: 100px; object-fit: contain; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: white;" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div style="width: 100px; height: 100px; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #f8f9fa; display: none; align-items: center; justify-content: center; color: #999; font-size: 0.8rem; text-align: center;">
+                            No Logo
+                        </div>
+                    @else
+                        <div style="width: 100px; height: 100px; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #999; font-size: 0.8rem; text-align: center;">
+                            No Logo
+                        </div>
                     @endif
                     <div>
                         <h1>{{ $job->title }}</h1>

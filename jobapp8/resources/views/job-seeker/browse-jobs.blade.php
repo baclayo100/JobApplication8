@@ -41,38 +41,42 @@
             @endif
 
             @if($jobs->count() > 0)
-                @foreach($jobs as $job)
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div style="flex: 1;">
-                                    <div class="d-flex align-items-start gap-3 mb-2">
-                                        @if($job->company_logo)
-                                            <img src="{{ asset('storage/' . $job->company_logo) }}" alt="{{ $job->company }} Logo" style="max-width: 60px; max-height: 60px; object-fit: contain; border: 1px solid #ddd; border-radius: 4px; padding: 5px;" onerror="this.style.display='none'">
-                                        @endif
-                                        <div>
-                                            <h3>{{ $job->title }}</h3>
-                                            <p class="text-muted">{{ $job->company }} • {{ $job->location }}</p>
+                <div class="jobs-list">
+                    @foreach($jobs as $job)
+                        <div class="card job-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div style="flex: 1; margin-right: 2rem;">
+                                        <div class="d-flex align-items-start gap-3 mb-2">
+                                            @if($job->company_logo && !empty($job->company_logo))
+                                                @php
+                                                    $logoPath = asset('storage/' . $job->company_logo);
+                                                @endphp
+                                                <img src="{{ $logoPath }}" alt="{{ $job->company }} Logo" style="max-width: 60px; max-height: 60px; object-fit: contain; border: 1px solid #ddd; border-radius: 4px; padding: 5px; background: #f8f9fa;">
+                                            @endif
+                                            <div>
+                                                <h3 style="margin: 0 0 0.5rem 0; color: #333; font-size: 1.5rem;">{{ $job->title }}</h3>
+                                                <p class="text-muted" style="margin: 0; color: #666;">{{ $job->company }} • {{ $job->location }}</p>
+                                            </div>
+                                        </div>
+                                        <p style="color: #666; margin: 1rem 0;">{{ Str::limit($job->description, 200) }}</p>
+                                        <div class="d-flex gap-2 mb-3 flex-wrap">
+                                            <span class="badge badge-info">{{ ucfirst(str_replace('_', ' ', $job->employment_type)) }}</span>
+                                            <span class="badge badge-secondary">{{ ucfirst($job->experience_level) }}</span>
+                                            @if($job->salary_range)
+                                                <span class="badge badge-success">{{ $job->salary_range }}</span>
+                                            @endif
                                         </div>
                                     </div>
-                                    <p>{{ Str::limit($job->description, 200) }}</p>
-                                    <div class="d-flex gap-2 mb-3">
-                                        <span class="badge badge-info">{{ ucfirst(str_replace('_', ' ', $job->employment_type)) }}</span>
-                                        <span class="badge badge-secondary">{{ ucfirst($job->experience_level) }}</span>
-                                        @if($job->salary_range)
-                                            <span class="badge badge-success">{{ $job->salary_range }}</span>
-                                        @endif
+                                    <div class="text-right" style="min-width: 150px;">
+                                        <p class="text-muted" style="margin: 0 0 1rem 0; color: #666; font-size: 0.9rem;">{{ $job->created_at->format('M d, Y') }}</p>
+                                        <a href="{{ route('job-seeker.job.show', $job) }}" class="btn btn-primary">View Details</a>
                                     </div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-muted">{{ $job->created_at->format('M d, Y') }}</p>
-                                    <a href="{{ route('job-seeker.job.show', $job) }}" class="btn btn-primary">View Details</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
 
                 <!-- Pagination -->
                 @if($jobs->hasPages())

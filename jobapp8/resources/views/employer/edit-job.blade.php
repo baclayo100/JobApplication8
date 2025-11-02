@@ -40,15 +40,22 @@
             </div>
             <div class="form-group">
                 <label for="company_logo">Company Logo</label>
-                @if($job->company_logo)
+                @if($job->company_logo && !empty($job->company_logo))
+                    @php
+                        $currentLogoPath = asset('storage/' . $job->company_logo);
+                    @endphp
                     <div class="mb-2">
-                        <img src="{{ asset('storage/' . $job->company_logo) }}" alt="Company Logo" style="max-height: 100px; margin-bottom: 10px;" onerror="this.style.display='none'">
+                        <img id="current-logo" src="{{ $currentLogoPath }}" alt="Company Logo" style="max-height: 100px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #f8f9fa;">
                         <br>
                         <small class="text-muted">Current logo</small>
                     </div>
                 @endif
-                <input type="file" id="company_logo" name="company_logo" class="form-control" accept="image/jpeg,image/png,image/jpg,image/gif,image/svg">
+                <input type="file" id="company_logo" name="company_logo" class="form-control" accept="image/jpeg,image/png,image/jpg,image/gif,image/svg" onchange="previewLogo(event)">
                 <small class="form-text text-muted">Upload a new logo to replace the current one (max 2MB, JPG/PNG/GIF/SVG)</small>
+                <div id="logo-preview" class="logo-preview" style="display: none; margin-top: 1rem;">
+                    <img id="logo-preview-img" src="" alt="New Logo Preview" style="max-width: 150px; max-height: 150px; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #f8f9fa;">
+                    <p style="margin-top: 0.5rem; color: #666; font-size: 0.9rem;">New Logo Preview</p>
+                </div>
             </div>
             <div class="form-row d-flex gap-3">
                 <div class="form-group" style="flex:1;">
@@ -111,4 +118,25 @@
         </form>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    function previewLogo(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('logo-preview');
+        const previewImg = document.getElementById('logo-preview-img');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    }
+</script>
+@endpush
 @endsection

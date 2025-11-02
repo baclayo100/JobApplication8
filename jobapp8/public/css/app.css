@@ -223,6 +223,77 @@ body {
     padding: 1.5rem;
 }
 
+/* Job Listings Styles */
+.jobs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.job-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 0;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.job-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.job-card .card-body {
+    padding: 1.5rem;
+}
+
+.job-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.job-card .text-muted {
+    color: #666;
+}
+
+.badge-secondary {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* File Input and Logo Preview Styles */
+.logo-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo-preview img {
+    object-fit: contain;
+}
+
+input[type="file"] {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: white;
+    cursor: pointer;
+}
+
+input[type="file"]:hover {
+    border-color: #667eea;
+}
+
+.form-text {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #666;
+}
+
 /* Form Styles */
 .form-group {
     margin-bottom: 1.5rem;
@@ -426,6 +497,20 @@ body {
     .table td {
         padding: 0.5rem;
     }
+    
+    .job-card .d-flex.justify-content-between {
+        flex-direction: column;
+    }
+    
+    .job-card .text-right {
+        margin-top: 1rem;
+        text-align: left;
+        min-width: auto;
+    }
+    
+    .job-card .card-body > .d-flex > div:first-child {
+        margin-right: 0;
+    }
 }
 
 /* Utility Classes */
@@ -459,6 +544,14 @@ body {
 
 .align-items-center {
     align-items: center;
+}
+
+.align-items-start {
+    align-items: flex-start;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
 }
 
 .gap-2 {
