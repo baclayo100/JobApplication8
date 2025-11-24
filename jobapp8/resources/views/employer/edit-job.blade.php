@@ -42,7 +42,7 @@
                 <label for="company_logo">Company Logo</label>
                 @if($job->company_logo && !empty($job->company_logo))
                     @php
-                        $currentLogoPath = asset('storage/' . $job->company_logo);
+                        $currentLogoPath = \Illuminate\Support\Facades\Storage::url($job->company_logo);
                     @endphp
                     <div class="mb-2">
                         <img id="current-logo" src="{{ $currentLogoPath }}" alt="Company Logo" style="max-height: 100px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #f8f9fa;">

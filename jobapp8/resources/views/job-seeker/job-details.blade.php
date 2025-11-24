@@ -31,7 +31,7 @@
                 <div class="d-flex align-items-center gap-3">
                     @if($job->company_logo && !empty($job->company_logo))
                         @php
-                            $logoPath = asset('storage/' . $job->company_logo);
+                            $logoPath = \Illuminate\Support\Facades\Storage::url($job->company_logo);
                         @endphp
                         <img src="{{ $logoPath }}" alt="{{ $job->company }} Logo" style="max-width: 100px; max-height: 100px; object-fit: contain; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: white;" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div style="width: 100px; height: 100px; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #f8f9fa; display: none; align-items: center; justify-content: center; color: #999; font-size: 0.8rem; text-align: center;">
@@ -72,7 +72,7 @@
                         </div>
                         @if($job->salary_range)
                             <div class="mb-3">
-                                <strong>Salary:</strong> {{ $job->salary_range }}
+                                <strong>Salary:</strong> ₱{{ $job->salary_range }}
                             </div>
                         @endif
                         <div class="mb-3">

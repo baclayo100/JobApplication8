@@ -50,7 +50,7 @@
                                         <div class="d-flex align-items-start gap-3 mb-2">
                                             @if($job->company_logo && !empty($job->company_logo))
                                                 @php
-                                                    $logoPath = asset('storage/' . $job->company_logo);
+                                                    $logoPath = \Illuminate\Support\Facades\Storage::url($job->company_logo);
                                                 @endphp
                                                 <img src="{{ $logoPath }}" alt="{{ $job->company }} Logo" style="max-width: 60px; max-height: 60px; object-fit: contain; border: 1px solid #ddd; border-radius: 4px; padding: 5px; background: #f8f9fa;">
                                             @endif
@@ -64,7 +64,7 @@
                                             <span class="badge badge-info">{{ ucfirst(str_replace('_', ' ', $job->employment_type)) }}</span>
                                             <span class="badge badge-secondary">{{ ucfirst($job->experience_level) }}</span>
                                             @if($job->salary_range)
-                                                <span class="badge badge-success">{{ $job->salary_range }}</span>
+                                                <span class="badge badge-success">₱{{ $job->salary_range }}</span>
                                             @endif
                                         </div>
                                     </div>

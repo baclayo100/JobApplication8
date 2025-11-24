@@ -54,6 +54,7 @@
                                     <th>Company</th>
                                     <th>Applied Date</th>
                                     <th>Status</th>
+                                    <th>Employer Note</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -71,6 +72,13 @@
                                                 @else badge-warning @endif">
                                                 {{ ucfirst($application->status) }}
                                             </span>
+                                        </td>
+                                        <td>
+                                            @if(in_array($application->status, ['accepted','rejected','reviewed']) && !empty($application->notes))
+                                                <div style="max-width:300px; white-space:pre-wrap;">{{ $application->notes }}</div>
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="d-flex gap-2">
