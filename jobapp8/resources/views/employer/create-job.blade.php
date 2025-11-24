@@ -41,7 +41,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('employer.jobs.store') }}">
+                    <form method="POST" action="{{ route('employer.jobs.store') }}" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="form-group">
@@ -68,6 +68,20 @@
                             @error('company')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company_logo">Company Logo</label>
+                            <input type="file" id="company_logo" name="company_logo" class="form-control @error('company_logo') is-invalid @enderror" 
+                                   accept="image/jpeg,image/png,image/jpg,image/gif,image/svg" onchange="previewLogo(event)">
+                            <small class="form-text text-muted">Upload a company logo (max 2MB, JPG/PNG/GIF/SVG)</small>
+                            @error('company_logo')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <div id="logo-preview" class="logo-preview" style="display: none; margin-top: 1rem;">
+                                <img id="logo-preview-img" src="" alt="Logo Preview" style="max-width: 150px; max-height: 150px; border: 1px solid #ddd; border-radius: 8px; padding: 10px; background: #f8f9fa;">
+                                <p style="margin-top: 0.5rem; color: #666; font-size: 0.9rem;">Logo Preview</p>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -134,5 +148,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function previewLogo(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('logo-preview');
+            const previewImg = document.getElementById('logo-preview-img');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

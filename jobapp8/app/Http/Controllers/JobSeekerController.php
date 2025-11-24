@@ -75,4 +75,17 @@ class JobSeekerController extends Controller
             
         return view('job-seeker.applications', compact('applications'));
     }
+
+    public function withdrawApplication(JobApplication $application)
+    {
+        $user = Auth::user();
+        if ($application->job_seeker_id !== $user->id) {
+            abort(403);
+        }
+        if ($application->status !== 'pending') {
+            return redirect()->back()->with('error', 'Only pending applications can be withdrawn.');
+        }
+        $application->delete();
+        return redirect()->back()->with('success', 'Application withdrawn successfully.');
+    }
 }
