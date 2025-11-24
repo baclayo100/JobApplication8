@@ -1,77 +1,114 @@
-@import 'tailwindcss';
+/* Modern JobConnect stylesheet
+   - Lightweight, responsive, and clean
+   - Uses CSS variables for easy theming
+   - Optimized for job listing cards, forms, tables and admin/employer flows
+*/
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
-/* Custom modern theme overrides */
 :root{
-    --brand: #6C5CE7;
-    --muted: #6b7280;
-    --bg: #f7f9fc;
+    --bg: #f5f7fb;
     --card: #ffffff;
-    --accent: #00b894;
+    --muted: #6b7280;
+    --text: #0f172a;
+    --brand: #4f46e5; /* indigo-600 */
+    --brand-600: #4338ca;
+    --success: #10b981;
+    --danger: #ef4444;
+    --glass: rgba(255,255,255,0.7);
+    --radius-lg: 12px;
+    --radius-sm: 8px;
 }
 
+*{box-sizing:border-box}
+html,body{height:100%}
 body{
-    font-family: var(--font-sans);
+    margin:0;
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     background: linear-gradient(180deg, var(--bg) 0%, #ffffff 100%);
-    color: #111827;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
 }
 
-.header{background: transparent; padding: 1rem 0;}
-.navbar{display:flex; align-items:center; justify-content:space-between; gap:1rem;}
-.logo{font-weight:700; color:var(--brand); font-size:1.25rem; text-decoration:none}
-.nav-links{list-style:none; display:flex; gap:0.75rem; align-items:center; margin:0; padding:0}
-.nav-links a{color:var(--muted); text-decoration:none; padding:0.35rem 0.6rem; border-radius:6px}
-.nav-links a:hover{background:rgba(108,92,231,0.08); color:var(--brand)}
+/* Layout helpers */
+.container{max-width:1200px; margin:2.25rem auto; padding:0 1rem}
+.dashboard{display:block}
 
-.container{max-width:1100px; margin:2rem auto; padding:0 1rem}
-.card{background:var(--card); border-radius:12px; box-shadow:0 6px 18px rgba(17,24,39,0.06); overflow:hidden; margin-bottom:1.25rem}
-.card-header{padding:1rem 1.25rem; border-bottom:1px solid #eef2f7; background:linear-gradient(90deg, rgba(108,92,231,0.03), transparent)}
+/* Header / Nav */
+.header{padding:1rem 0}
+.navbar{display:flex; align-items:center; justify-content:space-between; gap:1rem}
+.logo{font-weight:700; color:var(--brand); font-size:1.25rem; text-decoration:none}
+.nav-links{list-style:none; display:flex; gap:0.5rem; margin:0; padding:0}
+.nav-links a{color:var(--muted); text-decoration:none; padding:0.5rem 0.75rem; border-radius:10px; transition:all .15s}
+.nav-links a:hover{background:rgba(79,70,229,0.06); color:var(--brand)}
+
+/* Cards */
+.card{background:var(--card); border-radius:var(--radius-lg); box-shadow:0 10px 30px rgba(15,23,42,0.06); overflow:hidden; margin-bottom:1.25rem}
+.card-header{padding:1rem 1.25rem; border-bottom:1px solid #eef2f7; background:linear-gradient(90deg, rgba(79,70,229,0.03), transparent)}
 .card-body{padding:1.25rem}
 
-.btn{display:inline-flex; align-items:center; gap:.5rem; padding:.5rem .8rem; border-radius:8px; border:0; cursor:pointer}
-.btn-primary{background:var(--brand); color:#fff}
-.btn-secondary{background:#edf2ff; color:var(--brand)}
-.btn-danger{background:#ff7675; color:white}
-.btn--link{background:transparent; color:var(--brand); padding:0}
+/* Buttons */
+.btn{display:inline-flex; align-items:center; gap:.5rem; padding:.55rem .9rem; border-radius:10px; border:0; cursor:pointer; font-weight:600}
+.btn-primary{background:var(--brand); color:#fff; box-shadow:0 6px 16px rgba(79,70,229,0.12)}
+.btn-primary:hover{background:var(--brand-600)}
+.btn-secondary{background:#eef2ff; color:var(--brand)}
+.btn-danger{background:var(--danger); color:#fff}
+.btn-outline{background:transparent; border:1px solid rgba(15,23,42,0.06); color:var(--text)}
 
-.badge{display:inline-block; padding:.25rem .5rem; border-radius:999px; font-size:.85rem}
-.badge-success{background:#dcfce7; color:#166534}
-.badge-warning{background:#fff7ed; color:#92400e}
-.badge-danger{background:#fee2e2; color:#991b1b}
+/* Badges */
+.badge{display:inline-block; padding:.25rem .5rem; border-radius:999px; font-size:.82rem; font-weight:600}
+.badge-success{background:#ecfdf5; color:#059669}
+.badge-warning{background:#fffbeb; color:#92400e}
+.badge-danger{background:#fff1f2; color:#b91c1c}
 .badge-info{background:#eef2ff; color:#0f172a}
 
-/* Table tweaks */
-.table{width:100%; border-collapse:collapse}
-.table th, .table td{padding:.75rem 1rem; text-align:left; border-bottom:1px solid #f1f5f9}
-.table thead th{background:transparent; color:var(--muted); font-weight:600}
+/* Job card */
+.job-card{border-radius:10px}
+.job-card .card-body{display:flex; gap:1rem; align-items:flex-start}
+.job-meta{display:flex; flex-direction:column; gap:.25rem}
+.job-company{color:var(--muted); font-size:.95rem}
+.job-title{font-size:1.15rem; font-weight:700; margin:0}
 
-/* Responsive cards */
+.job-logo{width:64px; height:64px; border-radius:8px; object-fit:contain; border:1px solid #eef2f6; background:#fff}
+
+/* Tables */
+.table{width:100%; border-collapse:collapse}
+.table th, .table td{padding:.75rem 1rem; text-align:left; border-bottom:1px solid #f1f5f9; vertical-align:middle}
+.table thead th{background:transparent; color:var(--muted); font-weight:700}
+
+/* Forms */
+.form-control{width:100%; padding:.6rem .75rem; border-radius:8px; border:1px solid #e6eef6; background:transparent}
+.form-control:focus{outline:none; box-shadow:0 6px 18px rgba(79,70,229,0.08); border-color:var(--brand-600)}
+
+/* Responsive grid */
 .feature-grid{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
 @media (max-width:900px){.feature-grid{grid-template-columns:1fr}}
 
-/* Small utilities */
+/* Utilities */
 .d-flex{display:flex}
+.gap-2{gap:.5rem}
 .justify-content-between{justify-content:space-between}
 .justify-content-start{justify-content:flex-start}
-.justify-content-end{justify-content:flex-end}
 .align-items-center{align-items:center}
-.gap-2{gap:.5rem}
-.mb-1{margin-bottom:.25rem}
-.mt-3{margin-top:1rem}
+.text-muted{color:var(--muted)}
+.mt-1{margin-top:.5rem}
+.mb-1{margin-bottom:.5rem}
 
-/* Application-specific styles */
-.job-card{border-radius:10px}
-.logo-preview img{border-radius:8px}
+/* Pagination */
+.pagination{display:flex; gap:.5rem; align-items:center; padding:1rem}
+.pagination a{padding:.5rem .75rem; border-radius:8px; background:#fff; border:1px solid #eef2f7}
 
-/* Make links look nicer */
-a.btn-outline-primary, a.btn-outline-secondary{display:inline-block; margin-right:.35rem; padding:.35rem .6rem; border-radius:6px; border:1px solid rgba(15,23,42,0.06); text-decoration:none}
+/* Small screens tweaks */
+@media (max-width:600px){
+    .nav-links{display:none}
+    .card-body{padding:.9rem}
+    .logo{font-size:1.05rem}
+}
+
+/* Utility link styles for resume buttons */
+.resume-link{display:inline-flex; gap:.4rem; align-items:center; padding:.35rem .6rem; border-radius:8px; border:1px solid rgba(15,23,42,0.06); text-decoration:none; color:var(--brand)}
+
+/* Make forms inside tables compact */
+.table .form-control{padding:.45rem .5rem; font-size:.92rem}
 
