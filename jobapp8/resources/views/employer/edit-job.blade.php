@@ -107,15 +107,18 @@
                     <input id="is_active" name="is_active" type="checkbox" value="1" @if(old('is_active', $job->is_active)) checked @endif>
                 </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="d-flex justify-content-start align-items-center mt-3">
                 <button type="submit" class="btn btn-primary">Update Job</button>
-                <form method="POST" action="{{ route('employer.jobs.delete', $job) }}" onsubmit="return confirm('Are you sure you want to delete this job?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete Job</button>
-                </form>
             </div>
         </form>
+
+        <div class="d-flex justify-content-end mt-3">
+            <form method="POST" action="{{ route('employer.jobs.delete', $job) }}" onsubmit="return confirm('Are you sure you want to delete this job?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Delete Job</button>
+            </form>
+        </div>
     </div>
 </div>
 

@@ -25,6 +25,7 @@
                         <th>Applicant</th>
                         <th>Status</th>
                         <th>Notes</th>
+                        <th>File</th>
                         <th>Applied At</th>
                         <th>Actions</th>
                     </tr>
@@ -43,6 +44,15 @@
                                 </span>
                             </td>
                             <td>{{ $application->notes ?? '-' }}</td>
+                            <td>
+                                @if(!empty($application->resume_path))
+                                    @php $resumeUrl = \Illuminate\Support\Facades\Storage::url($application->resume_path); @endphp
+                                    <a href="{{ $resumeUrl }}" target="_blank" class="btn btn-sm btn-outline-primary">View</a>
+                                    <a href="{{ $resumeUrl }}" download class="btn btn-sm btn-outline-secondary">Download</a>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
                             <td>{{ $application->created_at->format('Y-m-d H:i') }}</td>
                             <td>
                                 @if($application->status === 'pending')
